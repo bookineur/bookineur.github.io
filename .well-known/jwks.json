@@ -1,0 +1,16 @@
+{
+  "keys": [
+    {
+      "crv": "Ed25519",
+      "x": "9bzRKpppxAb3hGPH1XYrNoYf8h2I0W3ePvYn6S9iLfM",
+      "kty": "OKP",
+      "kid": "2026-07-10_6da",
+      "alg": "EdDSA",
+      "use": "sig",
+      "aauth": {
+        "device": "mk-king",
+        "created": "2026-07-10"
+      }
+    }
+  ]
+}
