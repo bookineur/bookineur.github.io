@@ -1,0 +1,6 @@
+{
+  "issuer": "https://bookineur.github.io",
+  "jwks_uri": "https://bookineur.github.io/.well-known/jwks.json",
+  "client_name": "Miguel KORGO - AAuth Demo Agent",
+  "logo_uri": "https://avatars.githubusercontent.com/u/0?v=4"
+}
