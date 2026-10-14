@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Miguel Korgo · Robotique & IA</title>
+<meta name="description" content="Miguel Korgo, élève-ingénieur EIGSI en robotique mobile et automatique : vision par ordinateur, ROS 2, commande de robots.">
+<meta property="og:title" content="Miguel Korgo · Robotique & IA">
+<meta property="og:description" content="Élève-ingénieur EIGSI : vision par ordinateur, ROS 2, commande de robots.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%23e8572a'/><text x='16' y='22' font-family='monospace' font-size='16' font-weight='700' fill='white' text-anchor='middle'>MK</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f4ef; --surface:#ffffff; --ink:#16181d; --muted:#5b616e; --line:#e2ded4;
+  --accent:#e8572a; --accent-soft:#fde8df; --grid:rgba(22,24,29,.05);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1115; --surface:#171a20; --ink:#eceae4; --muted:#9aa0ab; --line:#272b33;
+    --accent:#ff7a4d; --accent-soft:#2a1a14; --grid:rgba(255,255,255,.04);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1115; --surface:#171a20; --ink:#eceae4; --muted:#9aa0ab; --line:#272b33;
+  --accent:#ff7a4d; --accent-soft:#2a1a14; --grid:rgba(255,255,255,.04);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Space Grotesk",system-ui,sans-serif; line-height:1.6; font-size:17px;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:32px 32px;
+}
+a{color:inherit}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+@media(min-width:720px){.wrap{padding:0 32px}}
+
+/* nav */
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:12px}
+.logo{font-weight:700;text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo span{background:var(--accent);color:#fff;border-radius:7px;padding:2px 7px;font-size:14px}
+.links{display:flex;gap:18px;align-items:center;font-size:15px}
+.links a{text-decoration:none;color:var(--muted)}
+.links a:hover{color:var(--ink)}
+@media(max-width:600px){.links a.hide-sm{display:none}}
+#theme{background:none;border:1px solid var(--line);color:var(--ink);border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:16px}
+
+/* hero */
+header{padding:88px 0 64px}
+.tag{display:inline-block;font-size:13px;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:99px;margin-bottom:22px}
+h1{font-size:clamp(38px,7vw,72px);line-height:1.04;letter-spacing:-.02em;max-width:14ch}
+h1 em{font-style:normal;color:var(--accent)}
+.lead{font-size:clamp(17px,2.2vw,20px);color:var(--muted);max-width:58ch;margin-top:22px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 18px;border-radius:10px;text-decoration:none;font-weight:500;border:1px solid var(--line);background:var(--surface)}
+.btn.primary{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.btn:hover{transform:translateY(-1px)}
+
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-top:56px}
+@media(min-width:720px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--surface);padding:20px}
+.stat b{display:block;font-size:30px;font-family:"JetBrains Mono",monospace}
+.stat small{color:var(--muted);font-size:14px}
+
+/* sections */
+section{padding:72px 0;border-top:1px solid var(--line)}
+.kicker{font-size:13px;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+h2{font-size:clamp(28px,4vw,40px);letter-spacing:-.01em;margin:6px 0 32px}
+
+/* projects */
+.featured{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px;display:grid;gap:28px;margin-bottom:20px}
+@media(min-width:860px){.featured{grid-template-columns:1.2fr 1fr;padding:36px}}
+.featured h3{font-size:28px;margin:8px 0 12px}
+.pipeline{display:flex;flex-direction:column;gap:8px;font-size:14px}
+.step{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--bg)}
+.step i{font-style:normal;color:var(--accent);font-weight:600;width:24px}
+.arrow{color:var(--muted);text-align:center;font-size:12px;line-height:1}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.chip{font-size:12.5px;border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:var(--muted);font-family:"JetBrains Mono",monospace}
+.note{font-size:14px;color:var(--muted);margin-top:14px;border-left:3px solid var(--accent);padding-left:12px}
+
+.grid{display:grid;gap:20px}
+@media(min-width:720px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:980px){.grid{grid-template-columns:repeat(3,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px;display:flex;flex-direction:column;transition:border-color .2s}
+.card:hover{border-color:var(--accent)}
+.card .ico{width:42px;height:42px;border-radius:10px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;margin-bottom:16px}
+.card h3{font-size:19px;margin-bottom:8px}
+.card p{color:var(--muted);font-size:15px;flex:1}
+.status{font-size:12px;margin-top:14px;color:var(--muted)}
+.status::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--accent);margin-right:6px;vertical-align:1px}
+.status.done::before{background:#2fa36b}
+
+/* skills */
+.skills{display:grid;gap:16px}
+@media(min-width:720px){.skills{grid-template-columns:repeat(2,1fr)}}
+.skill{border:1px solid var(--line);border-radius:14px;padding:20px;background:var(--surface)}
+.skill h4{font-size:15px;margin-bottom:10px}
+
+/* method */
+.method{counter-reset:m;display:grid;gap:14px}
+@media(min-width:720px){.method{grid-template-columns:repeat(2,1fr)}}
+.method li{list-style:none;counter-increment:m;padding:18px 20px 18px 64px;position:relative;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.method li::before{content:counter(m,decimal-leading-zero);position:absolute;left:20px;top:18px;font-family:"JetBrains Mono",monospace;color:var(--accent);font-weight:600}
+.method li b{display:block}
+.method li span{color:var(--muted);font-size:15px}
+
+/* contact */
+.contact{background:var(--ink);color:var(--bg);border-radius:20px;padding:40px 28px;text-align:center}
+.contact h2{margin:6px 0 12px}
+.contact p{opacity:.75;max-width:48ch;margin:0 auto 26px}
+.contact .btn{background:var(--bg);color:var(--ink);border-color:var(--bg)}
+.contact .btn.ghost{background:transparent;color:var(--bg);border-color:color-mix(in srgb,var(--bg) 40%,transparent)}
+.contact .cta{justify-content:center}
+footer{padding:32px 0;color:var(--muted);font-size:14px;text-align:center}
+svg{flex-shrink:0}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo"><span class="mono">MK</span>Miguel Korgo</a>
+    <div class="links">
+      <a href="#projets">Projets</a>
+      <a href="#competences" class="hide-sm">Compétences</a>
+      <a href="#methode" class="hide-sm">Méthode</a>
+      <a href="#contact">Contact</a>
+      <button id="theme" aria-label="Changer de thème">◐</button>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <span class="tag mono">// élève-ingénieur · EIGSI · robotique mobile & automatique</span>
+    <h1>Je relie le <em>code</em> au monde physique.</h1>
+    <p class="lead">Vision par ordinateur, ROS 2, commande de systèmes dynamiques : je construis des systèmes qui voient, décident et bougent, et je documente chaque choix pour qu'on puisse le comprendre et le reproduire.</p>
+    <div class="cta">
+      <a class="btn primary" href="#projets">Voir mes projets →</a>
+      <a class="btn" href="mailto:miguelkorgo9@gmail.com">Me contacter</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>834</b><small>tests automatisés (Smart Surveillance)</small></div>
+      <div class="stat"><b>90 %</b><small>de couverture de code</small></div>
+      <div class="stat"><b>19</b><small>décisions d'architecture (ADR)</small></div>
+      <div class="stat"><b>15</b><small>projets ROS 2 au programme</small></div>
+    </div>
+  </div>
+</header>
+
+<section id="projets">
+  <div class="wrap">
+    <div class="kicker mono">01 — Projets</div>
+    <h2>Ce que je construis</h2>
+
+    <article class="featured">
+      <div>
+        <span class="tag mono">Projet de stage · phare</span>
+        <h3>Smart Surveillance AI</h3>
+        <p>Un système de vidéosurveillance intelligente : il lit des flux caméra, détecte et suit les objets, puis transforme ces détections en <strong>événements</strong> exploitables via une API. Pensé RGPD dès le départ : pas de reconnaissance faciale, conservation limitée à 30 jours.</p>
+        <div class="chips">
+          <span class="chip">Python</span><span class="chip">YOLOv8</span><span class="chip">OpenCV</span><span class="chip">FastAPI</span><span class="chip">Docker</span><span class="chip">PostgreSQL</span><span class="chip">RTSP</span><span class="chip">ONVIF</span>
+        </div>
+        <p class="note">8 sprints, 834 tests, 46 modes de panne analysés. La conformité ONVIF a été éprouvée contre un simulateur : la caméra physique n'était pas encore livrée.</p>
+      </div>
+      <div class="pipeline mono" aria-label="Chaîne de traitement">
+        <div class="step"><i>01</i>Flux caméra RTSP / ONVIF</div>
+        <div class="arrow">↓</div>
+        <div class="step"><i>02</i>Détection YOLOv8</div>
+        <div class="arrow">↓</div>
+        <div class="step"><i>03</i>Suivi multi-objets</div>
+        <div class="arrow">↓</div>
+        <div class="step"><i>04</i>Règles → événements</div>
+        <div class="arrow">↓</div>
+        <div class="step"><i>05</i>API FastAPI + base de données</div>
+      </div>
+    </article>
+
+    <div class="grid">
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l3 3M16 16l3 3M5 19l3-3M16 8l3-3"/></svg></div>
+        <h3>Parcours ROS 2</h3>
+        <p>15 projets progressifs en C++ et Python : nœuds, topics, services, simulation Gazebo, visualisation RViz, jusqu'à la navigation autonome.</p>
+        <div class="chips"><span class="chip">ROS 2</span><span class="chip">C++</span><span class="chip">Gazebo</span></div>
+        <div class="status">En cours</div>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12"/><circle cx="12" cy="3" r="1.5"/><rect x="5" y="15" width="14" height="5" rx="1"/><circle cx="8" cy="21" r="1"/><circle cx="16" cy="21" r="1"/></svg></div>
+        <h3>Pendule inversé & robot auto-équilibré</h3>
+        <p>Modélisation de Lagrange, commandabilité, placement de pôles, LQR et observateur sous MATLAB ; puis mise en œuvre sur un robot Arduino (IMU MPU-6050, codeurs).</p>
+        <div class="chips"><span class="chip">MATLAB</span><span class="chip">LQR</span><span class="chip">Arduino</span></div>
+        <div class="status">En cours</div>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3"/></svg></div>
+        <h3>CSB Desktop</h3>
+        <p>Noyau d'assistant IA supervisé en Python : orchestrateur, mémoire SQLite, politique de sécurité déterministe et budgets, avec un mode simulation sans API.</p>
+        <div class="chips"><span class="chip">Python</span><span class="chip">Agents IA</span><span class="chip">SQLite</span></div>
+        <div class="status">Conception</div>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
+        <h3>Démo d'autorisation inter-applications</h3>
+        <p>Mise en place d'un échange de jetons d'identité (RFC 8693 / RFC 7523) entre deux applications, avec un fournisseur d'identité local monté pour l'occasion.</p>
+        <div class="chips"><span class="chip">Node.js</span><span class="chip">OAuth</span><span class="chip">Docker</span></div>
+        <div class="status done">Présenté</div>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5a2 2 0 0 1 2-2h12v18H6a2 2 0 0 1-2-2z"/><path d="M8 7h6M8 11h6"/></svg></div>
+        <h3>Carnet de révision interactif</h3>
+        <p>Site de révision bilingue : plus de 350 questions commentées, fiches par thème, laboratoires interactifs et suivi des points faibles.</p>
+        <div class="chips"><span class="chip">JavaScript</span><span class="chip">HTML/CSS</span></div>
+        <div class="status done">Terminé</div>
+      </div>
+      <div class="card">
+        <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div>
+        <h3>Robotique sous-marine</h3>
+        <p>Simulation et commande d'un véhicule de surface autonome (ASV) sous MATLAB : modèle dynamique, régulation de cap et analyse des réponses.</p>
+        <div class="chips"><span class="chip">MATLAB</span><span class="chip">Commande</span></div>
+        <div class="status done">Terminé</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="competences">
+  <div class="wrap">
+    <div class="kicker mono">02 — Compétences</div>
+    <h2>Ma boîte à outils</h2>
+    <div class="skills">
+      <div class="skill"><h4>Robotique & automatique</h4><div class="chips"><span class="chip">ROS 2</span><span class="chip">Gazebo</span><span class="chip">RViz</span><span class="chip">MATLAB / Simulink</span><span class="chip">LQR</span><span class="chip">Observateurs</span><span class="chip">Arduino</span></div></div>
+      <div class="skill"><h4>IA & vision</h4><div class="chips"><span class="chip">YOLOv8</span><span class="chip">OpenCV</span><span class="chip">Suivi multi-objets</span><span class="chip">Agents LLM</span></div></div>
+      <div class="skill"><h4>Développement</h4><div class="chips"><span class="chip">Python</span><span class="chip">C++</span><span class="chip">JavaScript</span><span class="chip">FastAPI</span><span class="chip">pytest</span></div></div>
+      <div class="skill"><h4>Infra & données</h4><div class="chips"><span class="chip">Docker</span><span class="chip">Git / GitHub</span><span class="chip">PostgreSQL</span><span class="chip">SQLite</span><span class="chip">Linux / WSL2</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="methode">
+  <div class="wrap">
+    <div class="kicker mono">03 — Méthode</div>
+    <h2>Comment je travaille</h2>
+    <ol class="method">
+      <li><b>Comparer avant de coder</b><span>Chaque choix technique est pesé face à ses alternatives et consigné dans un ADR.</span></li>
+      <li><b>Tester pour de vrai</b><span>Une tâche n'est finie qu'après une exécution réelle, pas une supposition.</span></li>
+      <li><b>Nommer les limites</b><span>Je dis ce qui n'a pas pu être vérifié, plutôt que de le cacher.</span></li>
+      <li><b>Finir et expliquer</b><span>Je préfère un projet fini et documenté à dix projets à moitié commencés.</span></li>
+    </ol>
+  </div>
+</section>
+
+<section id="contact" style="border-top:0">
+  <div class="wrap">
+    <div class="contact">
+      <div class="kicker mono">04 — Contact</div>
+      <h2>Travaillons ensemble</h2>
+      <p>Je cherche des stages et des projets en robotique, vision par ordinateur ou systèmes embarqués.</p>
+      <div class="cta">
+        <a class="btn" href="mailto:miguelkorgo9@gmail.com">✉ miguelkorgo9@gmail.com</a>
+        <a class="btn ghost" href="https://www.linkedin.com/in/miguel-wind-panga-pascal-korgo-196a55397" target="_blank" rel="noopener">LinkedIn ↗</a>
+        <a class="btn ghost" href="https://github.com/bookineur" target="_blank" rel="noopener">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="mono">© <span id="y"></span> Miguel Korgo · fait main, hébergé sur GitHub Pages</footer>
+
+<script>
+document.getElementById('y').textContent = new Date().getFullYear();
+(function(){
+  var root = document.documentElement, btn = document.getElementById('theme');
+  try { var t = localStorage.getItem('theme'); if (t) root.dataset.theme = t; } catch(e){}
+  btn.addEventListener('click', function(){
+    var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch(e){}
+  });
+})();
+</script>
+</body>
+</html>
